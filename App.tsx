@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Curriculum from './components/Curriculum';
-import PromptGenerator from './components/PromptGenerator';
 import Contact from './components/Contact';
 
 const App: React.FC = () => {
@@ -12,7 +11,6 @@ const App: React.FC = () => {
       <main>
         <Hero />
         <Curriculum />
-        <PromptGenerator />
       </main>
       <Contact />
     </div>
