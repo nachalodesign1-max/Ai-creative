@@ -1,9 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 import { GenerationType } from "../types";
 
-// Check for API key availability without exposing it in client code directly if possible,
-// but for this environment, we rely on process.env.API_KEY being injected.
-const apiKey = process.env.API_KEY;
+// Check for API key availability without exposing it in client code directly if possible.
+// We safely check if 'process' is defined to avoid crashing in browser environments that don't polyfill it.
+const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
 
 let ai: GoogleGenAI | null = null;
 
@@ -13,7 +13,9 @@ if (apiKey) {
 
 export const enhancePrompt = async (userInput: string, type: GenerationType): Promise<string> => {
   if (!ai) {
-    throw new Error("API Key is missing. Please configure the environment.");
+    // Return a user-friendly message instead of crashing or throwing immediately if called
+    console.warn("API Key is missing.");
+    return "API ключ не настроен. Пожалуйста, убедитесь, что переменная окружения API_KEY добавлена в настройках вашего хостинга.";
   }
 
   const modelName = 'gemini-2.5-flash';
